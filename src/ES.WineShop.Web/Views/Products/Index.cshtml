@@ -1,0 +1,43 @@
+﻿<h1>Products</h1>
+<p>
+    <a asp-action="Create" class="btn btn-primary">Add New Product</a>
+</p>
+
+<form asp-controller="Products" asp-action="Index" method="get">
+    <div id="searchbox" class="d-flex flex-row mb-4">
+        @Html.TextBox("SearchString", null, new { @class = "form-control", placeholder = "Search product by name, description and short description..." })
+        <input type="submit" value="Search" class="btn btn-dark" />
+    </div>
+</form>
+
+<ejs-grid id="Grid" dataSource="@ViewBag.datasource" width="1110" height="720" allowPaging="true" allowSorting="true" allowFiltering="false">
+    <e-grid-pagesettings pageSize="15" />
+    <e-grid-filterSettings type="CheckBox"></e-grid-filterSettings>
+    <e-grid-columns>
+        <e-grid-column type="checkbox" width="50"></e-grid-column>
+        <e-grid-column headerText="Image" template="#imgTemplate"></e-grid-column>
+        <e-grid-column field="SKU" headerText="SKU"></e-grid-column>
+        <e-grid-column field="Name" headerText="Name"></e-grid-column>
+        <e-grid-column field="Description" headerText="Description"></e-grid-column>
+        <e-grid-column field="ShortDescription" headerText="Short Description"></e-grid-column>
+        <e-grid-column field="Category" headerText="Category"></e-grid-column>
+        <e-grid-column field="ListPrice" headerText="List Price" style="text-decoration: line-through;"></e-grid-column>
+        <e-grid-column field="ListPrice" headerText="List Price"></e-grid-column>
+        <e-grid-column field="SalePrice" headerText="Sale Price"></e-grid-column>
+        <e-grid-column field="ShippingCost" headerText="Shipping Cost"></e-grid-column>
+        <e-grid-column field="Availability" headerText="Availability"></e-grid-column>
+    </e-grid-columns>
+</ejs-grid>
+
+@if (ViewBag.datasource.Count > 0)
+{
+
+    @foreach (var item in ViewBag.datasource)
+    {
+        <script id="imgTemplate" type="text/x-template">
+            <div class="prod-thumb">
+                <img src="@item.ImageUrl" />
+            </div>
+        </script>
+    }
+}
